@@ -1,0 +1,24 @@
+{
+  "name": "playable-preview-service",
+  "version": "1.0.0",
+  "description": "Simple service for previewing playable ads",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "node src/app.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "multer": "^1.4.5-lts.1",
+    "express-session": "^1.17.3",
+    "yauzl": "^2.10.0",
+    "qrcode": "^1.5.3",
+    "mime-types": "^2.1.35",
+    "helmet": "^7.1.0",
+    "express-rate-limit": "^7.1.5",
+    "crypto": "^1.0.1"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

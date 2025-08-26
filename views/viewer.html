@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{TITLE}}</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body {{BODY_CLASS}}>
+    {{CONTENT}}
+
+    <script>
+        function changeDevice() {
+            const device = document.getElementById('deviceSelect').value;
+            const url = new URL(window.location);
+            url.searchParams.set('device', device);
+            window.location.href = url.toString();
+        }
+
+        function reloadPlayable() {
+            const frame = document.getElementById('playableFrame');
+            if (frame) {
+                frame.src = frame.src + (frame.src.includes('?') ? '&' : '?') + 'cache=' + Date.now();
+            }
+        }
+
+        function showQR() {
+            const url = window.location.href.split('?')[0];
+            const modal = document.getElementById('qrModal');
+            const qrCode = document.getElementById('qrCode');
+            
+            // Show loading
+            qrCode.innerHTML = '<div style="padding: 2rem; color: var(--text-secondary);">Generating QR code...</div>';
+            modal.style.display = 'block';
+            
+            fetch('/api/qr?url=' + encodeURIComponent(url))
+                .then(response => response.text())
+                .then(svg => {
+                    qrCode.innerHTML = '<div class="qr-code">' + svg + '</div>';
+                })
+                .catch(error => {
+                    qrCode.innerHTML = '<div style="padding: 2rem; color: var(--danger);">Failed to generate QR code</div>';
+                    console.error('QR generation error:', error);
+                });
+        }
+
+        function closeQR() {
+            document.getElementById('qrModal').style.display = 'none';
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'r' && (e.ctrlKey || e.metaKey)) {
+                e.preventDefault();
+                reloadPlayable();
+            }
+            if (e.key === 'Escape') {
+                closeQR();
+            }
+        });
+
+        // Auto-focus device select when page loads
+        window.addEventListener('load', function() {
+            const deviceSelect = document.getElementById('deviceSelect');
+            if (deviceSelect) {
+                deviceSelect.focus();
+            }
+        });
+    </script>
+</body>
+</html>
