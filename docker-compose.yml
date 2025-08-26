@@ -12,4 +12,6 @@ services:
       - PORT=3000
       - ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin123}
       - BASE_URL=${BASE_URL:-http://localhost:3000}
+      - SESSION_SECRET=${SESSION_SECRET:-fallback_secret_change_in_production}
+      - NODE_ENV=${NODE_ENV:-production}
     restart: unless-stopped

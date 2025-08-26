@@ -6,11 +6,13 @@ WORKDIR /app
 COPY package.json ./
 RUN npm install --production
 
-# Копируем исходный код
+# Копируем все необходимые файлы
 COPY src/ ./src/
+COPY views/ ./views/
+COPY public/ ./public/
 
-# Создаем директории
-RUN mkdir -p uploads public temp
+# Создаем директории для данных
+RUN mkdir -p uploads temp
 
 # Открываем порт
 EXPOSE 3000

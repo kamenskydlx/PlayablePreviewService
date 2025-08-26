@@ -15,8 +15,7 @@
     "qrcode": "^1.5.3",
     "mime-types": "^2.1.35",
     "helmet": "^7.1.0",
-    "express-rate-limit": "^7.1.5",
-    "crypto": "^1.0.1"
+    "express-rate-limit": "^7.1.5"
   },
   "engines": {
     "node": ">=18"
